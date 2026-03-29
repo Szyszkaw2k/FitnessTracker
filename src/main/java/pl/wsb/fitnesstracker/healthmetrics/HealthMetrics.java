@@ -1,7 +1,5 @@
-package pl.wsb.fitnesstracker.healthmetrics;
+package pl.wsb.fitnesstracker.healthmetrics.api;
 
-
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -12,7 +10,7 @@ import pl.wsb.fitnesstracker.user.api.User;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "health_metrics")
+@Table(name = "Health_Metrics")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
@@ -20,9 +18,10 @@ public class HealthMetrics {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Nullable
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    // Relacja ManyToOne (Wiele pomiarów zdrowotnych przypada na jednego użytkownika)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -30,13 +29,14 @@ public class HealthMetrics {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
+    // Brak nullable = false, ponieważ użytkownik może podać tylko część wymiarów
     @Column(name = "weight")
     private Double weight;
 
     @Column(name = "height")
     private Double height;
 
-    @Column(name = "heart_rate")
+    @Column(name = "heartRate") // Zgodnie z nazewnictwem na schemacie
     private Integer heartRate;
 
     public HealthMetrics(
@@ -45,7 +45,6 @@ public class HealthMetrics {
             final Double weight,
             final Double height,
             final Integer heartRate) {
-
         this.user = user;
         this.date = date;
         this.weight = weight;
