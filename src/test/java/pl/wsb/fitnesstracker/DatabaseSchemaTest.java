@@ -35,6 +35,22 @@ class DatabaseSchemaTest {
     }
 
     @Test
+    void usersTableShouldHaveUserIdColumn() throws Exception {
+        try (Connection conn = dataSource.getConnection()) {
+            Set<String> cols = tableColumns(conn, "users");
+            assertThat(cols).contains("id"); // albo "id" jeśli tak masz w DB
+        }
+    }
+
+    @Test
+    void usersTableShouldHaveBirthdayColumn() throws Exception {
+        try (Connection conn = dataSource.getConnection()) {
+            Set<String> cols = tableColumns(conn, "users");
+            assertThat(cols).contains("birthday");
+        }
+    }
+
+    @Test
     void shouldHaveHealthMetricsTable() throws Exception {
         try (Connection conn = dataSource.getConnection()) {
             assertThat(tableExists(conn, "health_metrics")).isTrue();
