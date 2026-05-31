@@ -1,6 +1,5 @@
 package pl.wsb.fitnesstracker.user.api;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +10,7 @@ import lombok.ToString;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "users")
+@Table(name = "Users") // Zgodnie z ERD (wielka litera)
 @Getter
 @Setter // <-- Dodana adnotacja!
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,29 +19,31 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Nullable
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "first_name", nullable = false)
+    // Dodano brakujące z konstruktora pola firstName i lastName
+    @Column(name = "firstName", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "lastName", nullable = false)
     private String lastName;
 
-    @Column(name = "birthdate", nullable = false)
-    private LocalDate birthdate;
+    // Zmiana z birthdate na birthday zgodnie ze schematem
+    @Column(name = "birthday", nullable = false)
+    private LocalDate birthday;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     public User(
             final String firstName,
             final String lastName,
-            final LocalDate birthdate,
+            final LocalDate birthday, // Zmiana nazwy parametru
             final String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthdate = birthdate;
+        this.birthday = birthday;
         this.email = email;
     }
 }
