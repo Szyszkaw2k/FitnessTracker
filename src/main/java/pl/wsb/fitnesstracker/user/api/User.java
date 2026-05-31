@@ -31,7 +31,7 @@ public class User {
 
     // Zmiana z birthdate na birthday zgodnie ze schematem
     @Column(name = "birthday", nullable = false)
-    private LocalDate birthday;
+    private LocalDate birthdate;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -39,11 +39,11 @@ public class User {
     public User(
             final String firstName,
             final String lastName,
-            final LocalDate birthday, // Zmiana nazwy parametru
+            final LocalDate birthdate, // Zmiana nazwy parametru
             final String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthday = birthday;
+        this.birthdate = birthdate;
         this.email = email;
     }
 }
